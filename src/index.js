@@ -3,6 +3,9 @@
 import React, {Component} from "react";
 import ReactDOM from "react-dom";
 
+// Dependencies.
+
+import State from "./State";
 class Index extends Component {
     constructor(props) {
         super(props);
@@ -11,8 +14,9 @@ class Index extends Component {
     render(){
         return (
             <div>
-                <h1>lalala</h1>
-            </div>
+                <h1>State Reducer Editor</h1>
+                <State/>
+            </div>  
         );
     }
 }
