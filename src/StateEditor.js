@@ -7,6 +7,8 @@ import ReactDOM from "react-dom";
 
 import style from "./State.css";
 
+// Components.
+import ReducerEditor from "./ReducerEditor";
 
 class StateEditor extends Component {
     constructor(props) {
@@ -71,14 +73,14 @@ class StateEditor extends Component {
             <div>
                 <button onClick={this.toggleStateEditor.bind(this)}>Create Default State</button>
                 <section className={this.state.showStateCreator? "": style.hide}>
-                    <textarea onChange={this.storeState.bind(this)}/>
-
-                    <button onClick={this.saveState.bind(this)}>Save State</button>
-                    <button onClick={this.toggleReducerEditor.bind(this)}>Add reducer</button>
-                    
-                    <section className={this.state.showReducerCreator? "": style.hide} >
-                        <textarea onChange={this.storeReducer.bind(this)}/>
-                        <button onClick={this.createNextState.bind(this)}>Create state</button>
+                    <section className={style.stateEditor}>
+                        <h6>State (Expected stringified JSON.)</h6>
+                        <textarea className={style.fill}onChange={this.storeState.bind(this)}/>
+                        <button onClick={this.toggleReducerEditor.bind(this)}>Add reducer</button>
+                        <section className={this.state.showReducerCreator? "": style.hide} >
+                            <ReducerEditor onChange={this.storeReducer.bind(this)} onClick={this.createNextState.bind(this)}/>
+                        </section>
+                        <button onClick={this.saveState.bind(this)}>Save State</button>
                     </section>
                 </section>
             </div>

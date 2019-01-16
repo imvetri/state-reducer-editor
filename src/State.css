@@ -1,3 +1,15 @@
 .hide {
     display: none;
 }
+
+.stateEditor {
+    border: 2px solid black;
+    resize: both;
+    overflow: auto;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.fill {
+
+}
