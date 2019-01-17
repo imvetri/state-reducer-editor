@@ -14,11 +14,11 @@ class ReducerEditor extends Component {
 
     render() {
         return (
-            <div>
+            <div className={this.props.show ? "" : style.hide}>
                 <h6>Reducer (Access state via "state" variable. Write code to modify it and see what happens.)</h6>
                 <section className={style.stateEditor}>
                     <textarea onChange={this.props.onChange} />
-                    <button onClick={this.props.onClick}>Create state</button>
+                    <button onClick={this.props.onSave}>Create state</button>
                 </section>
             </div>
         );

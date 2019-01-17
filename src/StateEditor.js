@@ -1,6 +1,6 @@
 // Libraries.
 
-import React, {Component} from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
 // Styles.
@@ -14,39 +14,33 @@ class StateEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            states : [],
+            states: [],
             storedState: "",
-            showStateCreator: false,
             storeReducer: "",
-            showReducerCreator: false
+            showReducerEditor: false
         }
     }
 
     storeState(e) {
         this.setState({
             storedState: e.target.value
-        }); 
-    }
-
-    toggleStateEditor () {
-        this.setState({
-            showStateCreator: !this.state.showStateCreator
         });
     }
-    toggleReducerEditor () {
+
+    toggleReducerEditor() {
         this.setState({
-            showReducerCreator: !this.state.showReducerCreator
+            showReducerEditor: !this.state.showReducerEditor
         })
     }
 
-    saveState(){
+    saveState() {
         let newState = {
             state: this.state.storedState,
             nextStates: [],
             previousStates: [],
             reducers: []
         }
-        
+
         let newStates = Array.from(this.state.states);
         newStates.push(newState);
 
@@ -58,31 +52,29 @@ class StateEditor extends Component {
     storeReducer(e) {
         this.setState({
             storeReducer: e.target.value
-        }); 
+        });
     }
 
-    createNextState () {
+    createNextState() {
+        // this.validateState();
+        // let nextState = this.runReducer(JSON.parse(this.storedState));
+        // Need a tree view of state + reducer combination.
         let newState = JSON.parse(this.state.storedState);
-        let reducerFunction = new Function("state", this.state.storeReducer+";return state");
+        let reducerFunction = new Function("state", this.state.storeReducer + ";return state");
         console.log(reducerFunction(newState));
     }
 
-    render(){
+    render() {
 
         return (
-            <div>
-                <button onClick={this.toggleStateEditor.bind(this)}>Create Default State</button>
-                <section className={this.state.showStateCreator? "": style.hide}>
-                    <section className={style.stateEditor}>
-                        <h6>State (Expected stringified JSON.)</h6>
-                        <textarea className={style.fill}onChange={this.storeState.bind(this)}/>
-                        <button onClick={this.toggleReducerEditor.bind(this)}>Add reducer</button>
-                        <section className={this.state.showReducerCreator? "": style.hide} >
-                            <ReducerEditor onChange={this.storeReducer.bind(this)} onClick={this.createNextState.bind(this)}/>
-                        </section>
-                        <button onClick={this.saveState.bind(this)}>Save State</button>
-                    </section>
+            <div className={this.props.show ? "" : style.hide}>
+                <section className={style.stateEditor}>
+                    <h6>State (Expected stringified JSON.)</h6>
+                    <textarea className={style.fill} onChange={this.storeState.bind(this)} />
+                    <button onClick={this.toggleReducerEditor.bind(this)}>Add reducer</button>
                 </section>
+                <ReducerEditor onChange={this.storeReducer.bind(this)} onSave={this.createNextState.bind(this)} show={this.state.showReducerEditor}/>
+                <button onClick={this.saveState.bind(this)}>Save State</button>
             </div>
         );
     }
